@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "641255701616",
+    "project_id": "quiz-29f74",
+    "storage_bucket": "quiz-29f74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641255701616:android:ca071c610549e95fa888b5",
+        "android_client_info": {
+          "package_name": "com.torrydo.quiz_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641255701616-s3jd5lj32fbjkujjp9mv5sh2t3aqbulo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3EOkIOzlQyAUvzcxD1vILoyIrzYrBP3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641255701616-s3jd5lj32fbjkujjp9mv5sh2t3aqbulo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
