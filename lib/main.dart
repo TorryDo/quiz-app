@@ -1,16 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz_app/firebase_options.dart';
-import 'package:quiz_app/src/features/auth/domain/models/account.dart';
-import 'package:quiz_app/src/features/auth/domain/repository/auth_repository.dart';
-import 'package:quiz_app/src/features/auth/presentation/auth_screen.dart';
-import 'package:quiz_app/src/features/auth/presentation/auth_viewmodel.dart';
-import 'package:quiz_app/src/features/topics/presentation/topic_screen.dart';
-import 'package:quiz_app/utils/models/resource/resource_x.dart';
+import 'package:quiz_app/src/features/quiz/presentation/quiz_provider.dart';
 
 import 'di/locator.dart';
+import 'firebase_options.dart';
+import 'src/features/auth/domain/models/account.dart';
+import 'src/features/auth/presentation/auth_provider.dart';
+import 'src/features/auth/presentation/auth_screen.dart';
+import 'src/features/quiz/presentation/topic_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,13 +26,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => initAuthProvider()),
+        ChangeNotifierProvider(create: (context) => initQuizProvider())
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        debugShowCheckedModeBanner: false,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -49,31 +53,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // final AuthRepository _authRepository = locator<AuthRepository>();
-
-  // Account? account;
-
-  // _MyHomePageState() {
-  //   _authRepository.getCurrentAccount().onSuccess((value) {
-  //     account = value;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Colors.blueGrey, body: _providers());
   }
 
   Widget _providers() {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => AuthViewModel()),
-    ], child: const MainNav());
+    // return MultiProvider(providers: [
+    //   ChangeNotifierProvider(create: (context) => initAuthProvider()),
+    //   ChangeNotifierProvider(create: (context) => initTopicProvider())
+    // ], child: const MainNav());
+    return const MainNav();
   }
-
-  // Widget _navigator() {
-  //
-  // }
-
 }
 
 class MainNav extends StatefulWidget {
@@ -84,12 +75,11 @@ class MainNav extends StatefulWidget {
 }
 
 class _MainNavState extends State<MainNav> {
-
   Account? account;
 
   @override
   Widget build(BuildContext context) {
-    var authViewModel = Provider.of<AuthViewModel>(context);
+    var authViewModel = Provider.of<AuthProvider>(context);
 
     account = authViewModel.account;
 
@@ -100,4 +90,3 @@ class _MainNavState extends State<MainNav> {
     }
   }
 }
-

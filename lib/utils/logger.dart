@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'const.dart';
 
 
-final logger = Logger();
-
 class Logger {
   String? _tagName;
   bool? _isLoggerEnabled;

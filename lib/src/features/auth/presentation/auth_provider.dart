@@ -5,16 +5,20 @@ import 'package:quiz_app/src/features/auth/domain/repository/auth_repository.dar
 import 'package:quiz_app/utils/logger.dart';
 import 'package:quiz_app/utils/models/resource/resource_x.dart';
 
-class AuthViewModel extends ChangeNotifier {
+AuthProvider initAuthProvider(){
+  return AuthProvider();
+}
+
+class AuthProvider extends ChangeNotifier with Logger {
   late AuthRepository _authRepository;
 
   Account? account;
 
-  AuthViewModel() {
+  AuthProvider() {
     _authRepository = locator<AuthRepository>();
-    _authRepository.getStream().listen((event) {
+    _authRepository.collectAccount().listen((event) {
       account = event;
-      logger.d(event?.uid.toString() ?? '-');
+      d(event?.uid.toString() ?? '-');
       notifyListeners();
     });
   }
@@ -24,7 +28,7 @@ class AuthViewModel extends ChangeNotifier {
       account = value;
       notifyListeners();
     }).onError((errorType, value) {
-      logger.e(errorType?.message ?? '');
+      e(errorType?.message ?? '');
     });
   }
 

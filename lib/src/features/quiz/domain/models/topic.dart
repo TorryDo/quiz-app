@@ -7,7 +7,7 @@ class Topic {
   Topic({
     required this.id,
     required this.title,
-    this.description = "",
+    this.description = '',
   });
 }
 

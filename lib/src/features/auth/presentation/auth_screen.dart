@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz_app/src/features/auth/presentation/auth_viewmodel.dart';
-import 'package:quiz_app/src/features/topics/presentation/topic_screen.dart';
+
+import '../../quiz/presentation/topic_screen.dart';
+import 'auth_provider.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  late AuthViewModel _authViewModel;
+  late AuthProvider _authViewModel;
 
 
   void _navigateToTopicScreen() {
@@ -22,7 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
 
-    _authViewModel = Provider.of<AuthViewModel>(context);
+    _authViewModel = Provider.of<AuthProvider>(context);
 
     return Container(
       width: double.infinity,

@@ -5,7 +5,7 @@ abstract class AuthRepository{
 
   Future<Resource<Account>> getCurrentAccount();
 
-  Stream<Account?> getStream();
+  Stream<Account?> collectAccount();
 
   Future<Resource<Account>> signIn();
 

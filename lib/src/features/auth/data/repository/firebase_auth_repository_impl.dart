@@ -17,7 +17,8 @@ class FirebaseAuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<Resource<Account>> getCurrentAccount() async {
-    var nullableUser = await _firebaseAuth.authStateChanges().first;
+    var nullableUser = _firebaseAuth.currentUser;
+    // var n2 = _googleSignIn.currentUser;
 
     if (nullableUser == null) {
       return Resource.Success(null);
@@ -27,7 +28,7 @@ class FirebaseAuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Stream<Account?> getStream() async* {
+  Stream<Account?> collectAccount() async* {
     yield* _firebaseAuth.authStateChanges().asyncMap((event) {
       if (event == null) return null;
       return event.toAccount();
