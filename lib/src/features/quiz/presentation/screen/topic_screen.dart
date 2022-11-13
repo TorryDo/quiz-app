@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/src/features/quiz/domain/models/topic.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/topic_provider.dart';
+import 'package:quiz_app/utils/lang/list_ext.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 
-import '../../../auth/presentation/auth_provider.dart';
-import '../quiz_provider.dart';
 import 'volume_screen.dart';
 
 class TopicScreen extends StatefulWidget {
@@ -14,23 +14,13 @@ class TopicScreen extends StatefulWidget {
 }
 
 class _TopicScreenState extends State<TopicScreen> {
-  late AuthProvider _authProvider;
-  late QuizProvider _quizProvider;
-
-  void _navigateToVolumeRoute(Topic topic) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => VolumeScreen(topic: topic)),
-    );
-  }
+  late TopicProvider _topicProvider;
 
   // UI ------------------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
-
-    _authProvider = context.provider<AuthProvider>();
-    _quizProvider = context.provider<QuizProvider>();
+    _topicProvider = context.provider();
 
     return Container(
       color: Colors.blueAccent,
@@ -40,20 +30,17 @@ class _TopicScreenState extends State<TopicScreen> {
 
   Widget _grid() {
     return ListView(
-      children: [
-        for (var topic in _quizProvider.topics)
-          GestureDetector(
+      children: _topicProvider.topics.mapTo((item) {
+        return GestureDetector(
             child: Container(
                 width: double.infinity,
                 height: 60.0,
                 color: Colors.redAccent,
-                child: Center(child: Text(topic.title))),
+                child: Center(child: Text(item.title))),
             onTap: () {
-              _quizProvider.onTopicTap(topic);
-              _navigateToVolumeRoute(topic);
-            },
-          )
-      ],
+              _topicProvider.navigateToVolumeScreen(context, item);
+            });
+      }),
     );
   }
 }

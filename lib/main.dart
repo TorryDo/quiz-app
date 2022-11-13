@@ -1,7 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz_app/src/features/quiz/presentation/quiz_provider.dart';
+import 'package:quiz_app/routes.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/quiz_provider.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/quiz_screen.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/topic_provider.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/volume_provider.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/volume_screen.dart';
+import 'package:quiz_app/src/features/summary_result/presentation/summary_provider.dart';
+import 'package:quiz_app/src/features/summary_result/presentation/summary_result_screen.dart';
+import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 
 import 'di/locator.dart';
 import 'firebase_options.dart';
@@ -28,15 +36,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => initAuthProvider()),
-        ChangeNotifierProvider(create: (context) => initQuizProvider())
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => TopicProvider(locator())),
+        ChangeNotifierProvider(create: (context) => VolumeProvider(locator())),
+        ChangeNotifierProvider(create: (context) => QuizProvider(locator())),
+        ChangeNotifierProvider(create: (context) => SummaryProvider())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
+        initialRoute: Routes.INITIAL,
+        routes: {
+          Routes.INITIAL: (context) =>
+              const MyHomePage(title: 'Flutter Demo Home Page'),
+          Routes.AUTH_SCREEN: (context) => const AuthScreen(),
+          Routes.TOPIC_SCREEN: (context) => const TopicScreen(),
+          Routes.VOLUME_SCREEN: (context) => const VolumeScreen(),
+          Routes.QUIZ_SCREEN: (context) => const QuizScreen(),
+          Routes.SUMMARY_SCREEN: (context) => const SummaryResultScreen()
+        },
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
         debugShowCheckedModeBanner: false,
       ),
     );
@@ -53,40 +73,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.blueGrey, body: _providers());
-  }
-
-  Widget _providers() {
-    // return MultiProvider(providers: [
-    //   ChangeNotifierProvider(create: (context) => initAuthProvider()),
-    //   ChangeNotifierProvider(create: (context) => initTopicProvider())
-    // ], child: const MainNav());
-    return const MainNav();
-  }
-}
-
-class MainNav extends StatefulWidget {
-  const MainNav({Key? key}) : super(key: key);
-
-  @override
-  State<MainNav> createState() => _MainNavState();
-}
-
-class _MainNavState extends State<MainNav> {
   Account? account;
 
   @override
   Widget build(BuildContext context) {
-    var authViewModel = Provider.of<AuthProvider>(context);
+    var authViewModel = context.provider<AuthProvider>();
 
     account = authViewModel.account;
 
-    if (account == null) {
-      return const AuthScreen();
-    } else {
-      return const TopicScreen();
-    }
+    return Material(
+      child: (){
+        if (account == null) {
+          return const AuthScreen();
+        } else {
+          return const TopicScreen();
+        }
+      }(),
+    );
+
   }
 }

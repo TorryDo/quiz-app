@@ -4,7 +4,7 @@ import '../../domain/models/question_answer.dart';
 import '../../domain/models/question_description.dart';
 import '../../domain/models/topic.dart';
 import '../../domain/models/volume.dart';
-import '../../domain/repository/topic_repository.dart';
+import '../../domain/repository/quiz_repository.dart';
 
 class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   final _fakeTopic = Topic(
@@ -33,7 +33,7 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
 
     List<Question> ql = [];
 
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 5; i++) {
       var temp = (_fakeQuestion.copyWith(id: i));
       ql.add(temp);
     }
@@ -64,7 +64,7 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
     e("return fake data");
     List<Question> ql = [];
 
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 5; i++) {
 
       var tempAnswer = AnswerFromOptions(options: ['torydo$i', 'idk', 'dkm', 'kut'], position: 0);
 
@@ -82,7 +82,7 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   List<Volume> getVolumesByTopic(Topic topic) {
     List<Volume> vl = [];
 
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 5; i++) {
       var temp = (_fakeVolume.copyWith(id: i, title: 'not awesome volume $i'));
       vl.add(temp);
     }

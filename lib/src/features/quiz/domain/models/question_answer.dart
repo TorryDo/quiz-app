@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/core/side_effect.dart';
+import 'package:quiz_app/core/hook.dart';
 import 'package:quiz_app/src/features/quiz/presentation/view/question_option.dart';
 import 'package:quiz_app/utils/logger.dart';
 
 abstract class QuestionAnswer {
+
+  @protected
+  Function(QuestionSideEffect)? postSideEffect;
+
+  void collectSideEffect(Function(QuestionSideEffect) event){
+    postSideEffect = event;
+  }
+
   bool isValid();
 
   void setUserAnswer(dynamic any);
 
   Widget renderInput();
 }
+
+abstract class QuestionSideEffect{
+  QuestionSideEffect();
+}
+class AnswerValid extends QuestionSideEffect{
+  AnswerValid();
+}
+class AnswerInValid extends QuestionSideEffect{
+  AnswerInValid();
+}
+
 
 class AnswerFromOptions extends QuestionAnswer with Logger {
   List<String> options = <String>[];
@@ -41,6 +60,15 @@ class AnswerFromOptions extends QuestionAnswer with Logger {
       onOptionClick: (position) {
         userAnswer = position;
       },
+      onConfirmClick: (){
+        if(postSideEffect != null) {
+          if(isValid()){
+            postSideEffect!(AnswerValid());
+          }else{
+            postSideEffect!(AnswerInValid());
+          }
+        }
+      },
     );
   }
 }
@@ -48,17 +76,23 @@ class AnswerFromOptions extends QuestionAnswer with Logger {
 class AnswerFromOptionsView extends StatefulWidget {
   final List<String> options;
   final Function(int)? onOptionClick;
+  final Function? onConfirmClick;
   final int previousUserAnswer;
 
   const AnswerFromOptionsView(
-      {Key? key, required this.options, this.onOptionClick, required this.previousUserAnswer})
+      {Key? key,
+      required this.options,
+      this.onOptionClick,
+      this.onConfirmClick,
+      required this.previousUserAnswer})
       : super(key: key);
 
   @override
   State<AnswerFromOptionsView> createState() => _AnswerFromOptionsViewState();
 }
 
-class _AnswerFromOptionsViewState extends State<AnswerFromOptionsView> with SideEffect{
+class _AnswerFromOptionsViewState extends State<AnswerFromOptionsView>
+    with Hook, Logger {
   int userAnswer = -1;
 
   @override
@@ -68,16 +102,14 @@ class _AnswerFromOptionsViewState extends State<AnswerFromOptionsView> with Side
     setState(() {
       userAnswer = widget.previousUserAnswer;
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     void onUserClick(int id) {
       if (widget.onOptionClick != null) {
         widget.onOptionClick!(id);
-        setState((){
+        setState(() {
           userAnswer = id;
         });
       }
@@ -88,49 +120,40 @@ class _AnswerFromOptionsViewState extends State<AnswerFromOptionsView> with Side
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: AnswerOption(
-                id: 0,
-                userAnswer: userAnswer,
-                description: widget.options[0],
-                onClick: onUserClick,
-              ),
-            ),
+            Expanded(child: _option(0, onUserClick)),
             const SizedBox(width: 10),
-            Expanded(
-              child: AnswerOption(
-                id: 1,
-                userAnswer: userAnswer,
-                description: widget.options[1],
-                onClick: onUserClick,
-              ),
-            )
+            Expanded(child: _option(1, onUserClick))
           ],
         ),
         const SizedBox(height: 10),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-              child: AnswerOption(
-                id: 2,
-                userAnswer: userAnswer,
-                description: widget.options[2],
-                onClick: onUserClick,
-              ),
-            ),
+            Expanded(child: _option(2, onUserClick)),
             const SizedBox(width: 10),
-            Expanded(
-              child: AnswerOption(
-                id: 3,
-                userAnswer: userAnswer,
-                description: widget.options[3],
-                onClick: onUserClick,
-              ),
-            )
+            Expanded(child: _option(3, onUserClick))
           ],
+        ),
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              if (widget.onConfirmClick != null) {
+                widget.onConfirmClick!();
+              }
+            },
+            child: const Text('check'),
+          ),
         )
       ],
+    );
+  }
+
+  Widget _option(int id, Function(int) onClick) {
+    return AnswerOption(
+      id: id,
+      userAnswer: userAnswer,
+      description: widget.options[id],
+      onClick: onClick,
     );
   }
 }
