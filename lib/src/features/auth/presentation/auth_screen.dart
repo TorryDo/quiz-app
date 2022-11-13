@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../quiz/presentation/topic_screen.dart';
+import '../../quiz/presentation/screen/topic_screen.dart';
 import 'auth_provider.dart';
 
 class AuthScreen extends StatefulWidget {

@@ -13,6 +13,7 @@ class DescriptionOnly extends QuestionDescription {
   Widget render() {
     return Text(description);
   }
+
 }
 
 class DescriptionWithImage extends QuestionDescription {

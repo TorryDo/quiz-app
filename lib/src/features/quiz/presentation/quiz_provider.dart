@@ -21,17 +21,11 @@ class QuizProvider extends ChangeNotifier with Logger {
   List<Volume> volumes = [];
   List<Question> questions = [];
 
+  int questionPosition = 0;
+
   QuizProvider(this._quizRepository) {
     _quizRepository.collectTopics().listen((event) {
-      topics.clearAdd(event);
-      notifyListeners();
-    });
-    _quizRepository.collectVolumes().listen((event) {
-      volumes.clearAdd(event);
-      notifyListeners();
-    });
-    _quizRepository.collectQuestions().listen((event) {
-      questions.clearAdd(event);
+      topics = event;
       notifyListeners();
     });
   }
@@ -43,4 +37,13 @@ class QuizProvider extends ChangeNotifier with Logger {
   void onVolumeTap(Volume volume){
     d("on volume tap");
   }
+
+  void getVolumesByTopic(Topic topic){
+    volumes.clearAdd(_quizRepository.getVolumesByTopic(topic));
+  }
+
+  void getQuestionsByVolume(Volume volume){
+    questions.clearAdd(_quizRepository.getQuestionsByVolume(volume));
+  }
+
 }

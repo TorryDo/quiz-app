@@ -8,4 +8,11 @@ class Volume {
     required this.topicId,
     required this.title,
   });
+
+  Volume copyWith({int? id, int? topicId, String? title}) {
+    return Volume(
+        id: id ?? this.id,
+        topicId: topicId ?? this.topicId,
+        title: title ?? this.title);
+  }
 }

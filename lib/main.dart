@@ -8,7 +8,7 @@ import 'firebase_options.dart';
 import 'src/features/auth/domain/models/account.dart';
 import 'src/features/auth/presentation/auth_provider.dart';
 import 'src/features/auth/presentation/auth_screen.dart';
-import 'src/features/quiz/presentation/topic_screen.dart';
+import 'src/features/quiz/presentation/screen/topic_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

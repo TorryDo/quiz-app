@@ -8,7 +8,9 @@ abstract class QuizRepository {
 
   Stream<List<Volume>> collectVolumes();
   Stream<List<Volume>> collectVolumesByTopic(Topic topic);
+  List<Volume> getVolumesByTopic(Topic topic);
 
   Stream<List<Question>> collectQuestions();
   Stream<List<Question>> collectQuestionsByVolume(Volume volume);
+  List<Question> getQuestionsByVolume(Volume volume);
 }

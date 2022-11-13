@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz_app/src/features/quiz/presentation/question_screen.dart';
+import 'package:quiz_app/src/features/quiz/domain/models/topic.dart';
+import 'package:quiz_app/src/features/quiz/domain/models/volume.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/question_screen.dart';
 import 'package:quiz_app/src/features/quiz/presentation/quiz_provider.dart';
+import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 
 class VolumeScreen extends StatefulWidget {
-  const VolumeScreen({Key? key}) : super(key: key);
+
+  final Topic topic;
+
+  const VolumeScreen({Key? key, required this.topic}) : super(key: key);
 
   @override
   State<VolumeScreen> createState() => _VolumeScreenState();
@@ -13,10 +19,12 @@ class VolumeScreen extends StatefulWidget {
 class _VolumeScreenState extends State<VolumeScreen> {
   late QuizProvider _topicProvider;
 
-  void _navigateToQuestionScreen(){
+
+
+  void _navigateToQuestionScreen(Volume volume){
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const QuestionScreen()),
+      MaterialPageRoute(builder: (context) => QuestionScreen(volume: volume))
     );
   }
 
@@ -24,7 +32,8 @@ class _VolumeScreenState extends State<VolumeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _topicProvider = context.read();
+    _topicProvider = context.provider();
+    _topicProvider.getVolumesByTopic(widget.topic);
 
     return Material(color: Colors.black, child: _body());
   }
@@ -42,7 +51,7 @@ class _VolumeScreenState extends State<VolumeScreen> {
             ),
             onTap: () {
               _topicProvider.onVolumeTap(item);
-              _navigateToQuestionScreen();
+              _navigateToQuestionScreen(item);
             },
           )
       ],

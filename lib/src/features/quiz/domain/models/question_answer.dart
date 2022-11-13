@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/core/side_effect.dart';
+import 'package:quiz_app/src/features/quiz/presentation/view/question_option.dart';
+import 'package:quiz_app/utils/logger.dart';
 
 abstract class QuestionAnswer {
   bool isValid();
@@ -8,7 +11,7 @@ abstract class QuestionAnswer {
   Widget renderInput();
 }
 
-class AnswerFromOptions extends QuestionAnswer {
+class AnswerFromOptions extends QuestionAnswer with Logger {
   List<String> options = <String>[];
   int position;
 
@@ -32,17 +35,75 @@ class AnswerFromOptions extends QuestionAnswer {
 
   @override
   Widget renderInput() {
+    return AnswerFromOptionsView(
+      options: options,
+      previousUserAnswer: userAnswer,
+      onOptionClick: (position) {
+        userAnswer = position;
+      },
+    );
+  }
+}
+
+class AnswerFromOptionsView extends StatefulWidget {
+  final List<String> options;
+  final Function(int)? onOptionClick;
+  final int previousUserAnswer;
+
+  const AnswerFromOptionsView(
+      {Key? key, required this.options, this.onOptionClick, required this.previousUserAnswer})
+      : super(key: key);
+
+  @override
+  State<AnswerFromOptionsView> createState() => _AnswerFromOptionsViewState();
+}
+
+class _AnswerFromOptionsViewState extends State<AnswerFromOptionsView> with SideEffect{
+  int userAnswer = -1;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      userAnswer = widget.previousUserAnswer;
+    });
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    void onUserClick(int id) {
+      if (widget.onOptionClick != null) {
+        widget.onOptionClick!(id);
+        setState((){
+          userAnswer = id;
+        });
+      }
+    }
+
     return Column(
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: _singleOption(options[0], 0),
+              child: AnswerOption(
+                id: 0,
+                userAnswer: userAnswer,
+                description: widget.options[0],
+                onClick: onUserClick,
+              ),
             ),
             const SizedBox(width: 10),
             Expanded(
-                child: _singleOption(options[1], 1)
+              child: AnswerOption(
+                id: 1,
+                userAnswer: userAnswer,
+                description: widget.options[1],
+                onClick: onUserClick,
+              ),
             )
           ],
         ),
@@ -50,27 +111,26 @@ class AnswerFromOptions extends QuestionAnswer {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(child: _singleOption(options[2], 2)),
+            Expanded(
+              child: AnswerOption(
+                id: 2,
+                userAnswer: userAnswer,
+                description: widget.options[2],
+                onClick: onUserClick,
+              ),
+            ),
             const SizedBox(width: 10),
-            Expanded(child: _singleOption(options[3], 3))
+            Expanded(
+              child: AnswerOption(
+                id: 3,
+                userAnswer: userAnswer,
+                description: widget.options[3],
+                onClick: onUserClick,
+              ),
+            )
           ],
         )
       ],
-    );
-  }
-
-  Widget _singleOption(String str, int position) {
-    return GestureDetector(
-      child: Container(
-        color: Colors.blueAccent,
-        padding: const EdgeInsets.all(10),
-        child: Text(str),
-      ),
-      onTap: (){
-        userAnswer = position;
-
-
-      },
     );
   }
 }
