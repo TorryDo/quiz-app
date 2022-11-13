@@ -1,0 +1,3 @@
+class SummaryResult{
+  SummaryResult();
+}

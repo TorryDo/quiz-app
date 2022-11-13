@@ -1,5 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:quiz_app/routes.dart';
+import 'package:quiz_app/src/features/summary_result/presentation/summary_provider.dart';
+import 'package:quiz_app/utils/framework/navigation_ext.dart';
 import 'package:quiz_app/utils/lang/list_ext.dart';
+import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 import 'package:quiz_app/utils/logger.dart';
 
 import '../../../../../di/locator.dart';
@@ -20,10 +24,17 @@ class QuizProvider extends ChangeNotifier with Logger {
 
   QuizProvider(this._quizRepository);
 
-  void updateQuestionsByVolume(Volume volume){
+  void prepare(Volume volume){
     this.volume = volume;
+    questionPosition = 0;
     questions.clearAdd(_quizRepository.getQuestionsByVolume(volume));
     notifyListeners();
+  }
+
+  void navigateToSummaryScreen(BuildContext context){
+    SummaryProvider summaryProvider = context.provider(listen: false);
+    summaryProvider.prepare(questions);
+    context.popAndPushNamed(Routes.SUMMARY_SCREEN);
   }
 
 }

@@ -33,7 +33,7 @@ class VolumeProvider extends ChangeNotifier{
 
   void navigateToQuizScreen(BuildContext context, Volume volume){
     QuizProvider quizProvider = context.provider(listen: false);
-    quizProvider.updateQuestionsByVolume(volume);
+    quizProvider.prepare(volume);
     context.pushNamed(Routes.QUIZ_SCREEN);
   }
 

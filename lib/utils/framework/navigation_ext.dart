@@ -9,4 +9,12 @@ extension NavigationX on BuildContext {
   void pop<T extends Object?>([T? result]) {
     Navigator.of(this).pop<T>(result);
   }
+
+  Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(
+      String routeName, {
+        TO? result,
+        Object? arguments,
+      }) {
+    return Navigator.of(this).popAndPushNamed<T, TO>(routeName, arguments: arguments, result: result);
+  }
 }

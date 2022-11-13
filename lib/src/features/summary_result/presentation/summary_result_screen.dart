@@ -3,8 +3,6 @@ import 'package:quiz_app/src/features/quiz/domain/models/question.dart';
 
 class SummaryResultScreen extends StatefulWidget {
 
-  // final List<Question> questions;
-
   const SummaryResultScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,6 +12,7 @@ class SummaryResultScreen extends StatefulWidget {
 class _SummaryResultScreenState extends State<SummaryResultScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(color: Colors.grey);
   }
+
 }

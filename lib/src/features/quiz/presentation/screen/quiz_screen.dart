@@ -18,10 +18,11 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> with Logger, Hook {
   late QuizProvider _quizProvider;
 
-  final PageController _pageController = PageController();
+  late PageController _pageController ;
 
   @override
   void initState() {
+    _pageController = PageController();
     super.initState();
   }
 
@@ -71,12 +72,18 @@ class _QuizScreenState extends State<QuizScreen> with Logger, Hook {
           });
         },
         children: _quizProvider.questions.mapIndexed((question, position) {
+
           question.questionAnswer.collectSideEffect((event) {
             if (event is AnswerValid) {
+              // d('pos = $position - leng = ${_quizProvider.questions.length}');
+              if(position >= _quizProvider.questions.length-1){
+                _quizProvider.navigateToSummaryScreen(context);
+                return;
+              }
               var nextPage = _quizProvider.questionPosition + 1;
               _pageController.jumpToPage(nextPage);
             } else if (event is AnswerInValid) {
-              d('answer invalid');
+              _quizProvider.navigateToSummaryScreen(context);
             }
           });
 
