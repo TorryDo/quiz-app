@@ -10,6 +10,7 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   final _fakeTopic = Topic(
     id: 0,
     title: "super awesome title",
+    description: "awesome description"
   );
 
   final _fakeVolume = Volume(id: 0, topicId: 0, title: 'not awesome volume');
@@ -24,7 +25,15 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   @override
   Stream<List<Topic>> collectTopics() async* {
     e("return fake data");
-    yield [_fakeTopic];
+
+    List<Topic> tl = [];
+
+    for (var i = 0; i < 15; i++) {
+      var temp = (_fakeTopic.copyWith(id: i, title: 'topic title $i'));
+      tl.add(temp);
+    }
+
+    yield tl;
   }
 
   @override
@@ -64,7 +73,7 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
     e("return fake data");
     List<Question> ql = [];
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 3; i++) {
 
       var tempAnswer = AnswerFromOptions(options: ['torydo$i', 'idk', 'dkm', 'kut'], position: 0);
 
@@ -82,7 +91,7 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   List<Volume> getVolumesByTopic(Topic topic) {
     List<Volume> vl = [];
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 15; i++) {
       var temp = (_fakeVolume.copyWith(id: i, title: 'not awesome volume $i'));
       vl.add(temp);
     }

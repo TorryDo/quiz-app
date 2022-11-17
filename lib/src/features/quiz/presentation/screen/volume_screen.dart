@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/src/constants/dimens.dart';
+import 'package:quiz_app/src/constants/tints.dart';
+import 'package:quiz_app/src/features/quiz/domain/models/volume.dart';
 import 'package:quiz_app/src/features/quiz/presentation/screen/volume_provider.dart';
-import 'package:quiz_app/utils/lang/list_ext.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 
 class VolumeScreen extends StatefulWidget {
@@ -19,22 +21,62 @@ class _VolumeScreenState extends State<VolumeScreen> {
   Widget build(BuildContext context) {
     _volumeProvider = context.provider();
 
-    return Material(color: Colors.black, child: _body());
+    return Material(
+        color: Tints.THEME_COLOR,
+        child: Column(
+          children: [
+            _appBar(),
+            Expanded(child: _body()),
+          ],
+        ));
+  }
+
+  Widget _appBar() {
+    return AppBar(
+      title: const Text('Choose Volume'),
+    );
   }
 
   Widget _body() {
-    return ListView(
-      children: _volumeProvider.volumes.mapTo((volume) => GestureDetector(
-            child: Container(
-              width: double.infinity,
-              height: 60.0,
-              color: Colors.blueAccent,
-              child: Center(child: Text(volume.title)),
+    return ListView.builder(
+      itemCount: _volumeProvider.volumes.length,
+      itemBuilder: (context, i) {
+        var volume = _volumeProvider.volumes[i];
+        return Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
+            child: _item(volume));
+      },
+    );
+  }
+
+  Widget _item(Volume volume) {
+    return GestureDetector(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.PADDING_M),
+        width: double.infinity,
+        height: 150.0,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.indigoAccent),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: [
+            const SizedBox(height: Dimens.PADDING_M),
+            Text(
+              volume.title,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            onTap: () {
-              _volumeProvider.navigateToQuizScreen(context, volume);
-            },
-          )),
+            const SizedBox(height: Dimens.PADDING_M),
+            Text(
+              volume.quizType.name,
+            ),
+          ],
+        ),
+      ),
+      onTap: () {
+        _volumeProvider.navigateToQuizScreen(context, volume);
+      },
     );
   }
 }

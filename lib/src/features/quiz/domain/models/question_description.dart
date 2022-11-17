@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:quiz_app/src/features/quiz/presentation/view/description_text.dart';
 
 abstract class QuestionDescription {
   Widget render();
@@ -11,7 +12,7 @@ class DescriptionOnly extends QuestionDescription {
 
   @override
   Widget render() {
-    return Text(description);
+    return DescriptionText(description: description);
   }
 
 }

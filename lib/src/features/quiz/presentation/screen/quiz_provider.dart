@@ -6,35 +6,35 @@ import 'package:quiz_app/utils/lang/list_ext.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 import 'package:quiz_app/utils/logger.dart';
 
-import '../../../../../di/locator.dart';
 import '../../domain/models/question.dart';
-import '../../domain/models/topic.dart';
 import '../../domain/models/volume.dart';
 import '../../domain/repository/quiz_repository.dart';
 
-
 class QuizProvider extends ChangeNotifier with Logger {
-
   final QuizRepository _quizRepository;
 
   late Volume volume;
   List<Question> questions = [];
 
-  int questionPosition = 0;
+  int _currentQuestion = 0;
+  set currentQuestion(value) {
+    _currentQuestion = value;
+    notifyListeners();
+  }
+  get currentQuestion => _currentQuestion;
 
   QuizProvider(this._quizRepository);
 
-  void prepare(Volume volume){
+  void prepare(Volume volume) {
     this.volume = volume;
-    questionPosition = 0;
+    currentQuestion = 0;
     questions.clearAdd(_quizRepository.getQuestionsByVolume(volume));
     notifyListeners();
   }
 
-  void navigateToSummaryScreen(BuildContext context){
+  void navigateToSummaryScreen(BuildContext context) {
     SummaryProvider summaryProvider = context.provider(listen: false);
     summaryProvider.prepare(questions);
     context.popAndPushNamed(Routes.SUMMARY_SCREEN);
   }
-
 }
