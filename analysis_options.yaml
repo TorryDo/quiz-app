@@ -26,6 +26,7 @@ linter:
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
     constant_identifier_names: false
     non_constant_identifier_names: false
+    unnecessary_this: false
 
 analyzer:
   errors:

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +9,7 @@ import 'package:quiz_app/src/features/quiz/presentation/screen/quiz_screen.dart'
 import 'package:quiz_app/src/features/quiz/presentation/screen/topic_provider.dart';
 import 'package:quiz_app/src/features/quiz/presentation/screen/volume_provider.dart';
 import 'package:quiz_app/src/features/quiz/presentation/screen/volume_screen.dart';
+import 'package:quiz_app/src/features/save_result/domain/repository/local_database_repository.dart';
 import 'package:quiz_app/src/features/summary_result/presentation/summary_provider.dart';
 import 'package:quiz_app/src/features/summary_result/presentation/summary_result_screen.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
@@ -24,7 +27,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  setupLocator();
+  await setupLocator();
 
   runApp(const MyApp());
 }
@@ -82,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
     account = authViewModel.account;
 
     return Material(
-      child: (){
+      child: () {
         if (account == null) {
           return const AuthScreen();
         } else {
@@ -90,6 +93,5 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       }(),
     );
-
   }
 }

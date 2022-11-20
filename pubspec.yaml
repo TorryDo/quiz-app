@@ -48,6 +48,10 @@ dependencies:
   auto_size_text: ^3.0.0
   animated_text_kit: ^4.2.2
 
+  #-database
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
   #ui
   step_progress_indicator: ^1.0.2
 
@@ -62,6 +66,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^2.0.0
+  build_runner: ^2.3.2
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

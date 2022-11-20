@@ -107,7 +107,9 @@ class SummaryResultScreen extends StatelessWidget {
 
   Widget _solve_all() {
     return Column(
-      children: const [Text('You won this game')],
+      children: const [
+        Text('You won this game'),
+      ],
     );
   }
 
