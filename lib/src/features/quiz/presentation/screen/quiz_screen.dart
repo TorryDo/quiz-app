@@ -36,7 +36,8 @@ class _QuizScreenState extends State<QuizScreen> with Logger, Hook {
           builder: (context) => AlertDialog(
             title: const Text('Are you sure?'),
             content: const Text(
-                "Do you want to exit the quiz?, looks like you're not finished yet"),
+              "Do you want to exit the quiz?, looks like you're not finished yet",
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () => context.pop(false),

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'const.dart';
 
 
-class Logger {
+mixin Logger {
   String? _tagName;
   bool? _isLoggerEnabled;
 
