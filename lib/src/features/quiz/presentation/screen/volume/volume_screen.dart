@@ -43,8 +43,9 @@ class _VolumeScreenState extends State<VolumeScreen> {
       itemBuilder: (context, i) {
         var volume = _volumeProvider.volumes[i];
         return Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
-            child: _item(volume));
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
+          child: _item(volume),
+        );
       },
     );
   }
@@ -71,7 +72,8 @@ class _VolumeScreenState extends State<VolumeScreen> {
             Text(volume.quizType.name),
             const SizedBox(height: Dimens.PADDING_M),
             Text(
-                'Highest score = ${_volumeProvider.quizMap[volume.id]?.validNumber ?? 0}')
+              'Highest score = ${_volumeProvider.quizMap[volume.id]?.validNumber ?? 0}',
+            )
           ],
         ),
       ),

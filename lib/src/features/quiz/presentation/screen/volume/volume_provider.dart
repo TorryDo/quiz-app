@@ -27,7 +27,7 @@ class VolumeProvider extends ChangeNotifier {
 
   late Topic topic;
 
-  List<Volume> volumes = [];
+  final List<Volume> volumes = [];
 
   VolumeProvider(
     this._quizRepository,
@@ -40,7 +40,7 @@ class VolumeProvider extends ChangeNotifier {
           quizMap[quiz.quizId] = quiz;
           continue;
         }
-        if (quiz.validNumber > quizMap[quiz.id]!.validNumber) {
+        if (quiz.validNumber > quizMap[quiz.quizId]!.validNumber) {
           quizMap[quiz.quizId] = quiz;
         }
       }

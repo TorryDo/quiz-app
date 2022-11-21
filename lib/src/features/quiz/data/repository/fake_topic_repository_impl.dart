@@ -8,10 +8,7 @@ import '../../domain/repository/quiz_repository.dart';
 
 class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   final _fakeTopic = Topic(
-    id: 0,
-    title: "super awesome title",
-    description: "awesome description"
-  );
+      id: 0, title: "super awesome title", description: "awesome description");
 
   final _fakeVolume = Volume(id: 0, topicId: 0, title: 'not awesome volume');
 
@@ -65,7 +62,14 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   @override
   Stream<List<Volume>> collectVolumesByTopic(Topic topic) async* {
     e("return fake data");
-    yield [_fakeVolume];
+    List<Volume> vl = [];
+
+    for (var i = 0; i < 3; i++) {
+      var temp = (_fakeVolume.copyWith(
+          id: i, topicId: topic.id, title: "volume number $i"));
+      vl.add(temp);
+    }
+    yield vl;
   }
 
   @override
@@ -73,14 +77,17 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
     e("return fake data");
     List<Question> ql = [];
 
-    for (var i = 0; i < 3; i++) {
 
-      var tempAnswer = AnswerFromOptions(options: ['torydo$i', 'idk', 'dkm', 'kut'], position: 0);
+
+    for (var i = 0; i < 3; i++) {
+      var tempAnswer = AnswerFromOptions(
+          options: ['torydo$i', 'idk', 'dkm', 'kut'], position: 0);
 
       var temp = (_fakeQuestion.copyWith(
         id: i,
         questionDescription: DescriptionOnly('who developed this app ${i}?'),
         questionAnswer: tempAnswer,
+        volumeId: volume.id
       ));
       ql.add(temp);
     }
@@ -91,8 +98,12 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   List<Volume> getVolumesByTopic(Topic topic) {
     List<Volume> vl = [];
 
-    for (var i = 0; i < 15; i++) {
-      var temp = (_fakeVolume.copyWith(id: i, title: 'not awesome volume $i'));
+    for (var i = 0; i < 10; i++) {
+      final temp = (_fakeVolume.copyWith(
+        id: i,
+        topicId: topic.id,
+        title: 'not awesome volume $i',
+      ));
       vl.add(temp);
     }
 
