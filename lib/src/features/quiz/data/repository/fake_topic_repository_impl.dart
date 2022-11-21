@@ -32,22 +32,22 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
     Volume(id: 12, topicId: 3, title: 'volume 12'),
   ];
 
+  final _fakeQuestion = Question(
+      id: 0,
+      volumeId: 0,
+      questionDescription: DescriptionOnly("who developed this app?"),
+      questionAnswer: AnswerFromOptions(
+          options: ["torrydo", "abc", "xyz", "hahaha"], position: 0));
+
   final List<Question> _fakeQuestions = [];
 
   FakeQuizRepositoryImpl() {
     int temp = 1;
     for (int i = 1; i <= 36; i++) {
       _fakeQuestions.add(
-        Question(
+        _fakeQuestion.copyWith(
           id: i,
           volumeId: temp,
-          questionDescription: DescriptionOnly(
-            'who developed this app? id$i',
-          ),
-          questionAnswer: AnswerFromOptions(
-            options: ["torrydo", "abc", "xyz", "hahaha"],
-            position: 0,
-          ),
         ),
       );
       if (i % 3 == 0) {
@@ -89,9 +89,16 @@ class FakeQuizRepositoryImpl extends QuizRepository with Logger {
   @override
   List<Question> getQuestionsByVolume(Volume volume) {
     e("return fake data");
-    List<Question> ql = [];
 
-    return _fakeQuestions.filter((it) => it.volumeId == volume.id);
+    return _fakeQuestions.filter((it) => it.volumeId == volume.id).mapIndexed((e, index) => e.copyWith(
+      questionDescription: DescriptionOnly(
+        'who developed this app? id$index',
+      ),
+      questionAnswer: AnswerFromOptions(
+        options: ["torrydo", "abc", "xyz", "hahaha"],
+        position: 0,
+      ),
+    ));
   }
 
   @override

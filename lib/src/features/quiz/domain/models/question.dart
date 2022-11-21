@@ -8,17 +8,16 @@ class Question {
   QuestionDescription questionDescription;
   QuestionAnswer questionAnswer;
 
-  Question(
-      {required this.id,
-      required this.volumeId,
-      required this.questionDescription,
-      required this.questionAnswer});
+  Question({required this.id,
+    required this.volumeId,
+    required this.questionDescription,
+    required this.questionAnswer});
 
-  Question copyWith(
-      {int? id,
-      int? volumeId,
-      QuestionDescription? questionDescription,
-      QuestionAnswer? questionAnswer}) {
+
+  Question copyWith({int? id,
+    int? volumeId,
+    QuestionDescription? questionDescription,
+    QuestionAnswer? questionAnswer}) {
     return Question(
         id: id ?? this.id,
         volumeId: volumeId ?? this.volumeId,
