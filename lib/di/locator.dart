@@ -9,4 +9,5 @@ Future<void> setupLocator() async {
   await hiveModules();
   remoteModule();
   localModules();
+
 }

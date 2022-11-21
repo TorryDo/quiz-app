@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/src/constants/dimens.dart';
 import 'package:quiz_app/src/constants/tints.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/topic_provider.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/topic/topic_screen_side_effect.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/topic/topic_provider.dart';
+import 'package:quiz_app/utils/framework/navigation_ext.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 import 'package:quiz_app/utils/logger.dart';
 
-import '../../domain/models/topic.dart';
+import '../../../../../../routes.dart';
+import '../../../domain/models/topic.dart';
 
 class TopicScreen extends StatefulWidget {
   const TopicScreen({Key? key}) : super(key: key);
@@ -17,15 +20,23 @@ class TopicScreen extends StatefulWidget {
 class _TopicScreenState extends State<TopicScreen> with Logger {
   late TopicProvider _topicProvider;
 
+  // support function ----------------------------------------------------------
+
+  void _navigateToVolumeScreen(){
+    context.pushNamed(Routes.VOLUME_SCREEN);
+  }
+
   // UI ------------------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
     _topicProvider = context.provider();
 
-    void onCloseClick() {
-      d('click close');
-    }
+    _topicProvider.collectSideEffect((effect){
+      if(effect is NavigateToVolumeScreen){
+        return _navigateToVolumeScreen();
+      }
+    });
 
     return Container(
       color: Colors.blueAccent,

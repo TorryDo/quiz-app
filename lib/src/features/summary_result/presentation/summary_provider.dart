@@ -37,14 +37,15 @@ class SummaryProvider extends ChangeNotifier
 
   void prepare(List<Question> questions) async {
     this.questions = questions;
-    localDatabaseRepository.insert(
-      QuizResult(
+
+    final quizResult = QuizResult(
         validNumber: _validQuestionCount(),
         quizId: questions[0].volumeId,
-      ),
+        submittedTime: DateTime.now()
     );
 
-    log("<> list = ${(await localDatabaseRepository.getAll()).length}");
+    await localDatabaseRepository.insert(quizResult);
+
   }
 
   void navigateToVolumeScreen() {

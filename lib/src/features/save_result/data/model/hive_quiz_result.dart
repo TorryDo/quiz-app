@@ -10,4 +10,7 @@ class HiveQuizResult extends HiveObject{
   @HiveField(1)
   late int quizId;
 
+  @HiveField(2)
+  late DateTime submittedTime;
+
 }

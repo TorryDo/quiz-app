@@ -18,17 +18,20 @@ class HiveQuizResultAdapter extends TypeAdapter<HiveQuizResult> {
     };
     return HiveQuizResult()
       ..validNumber = fields[0] as int
-      ..quizId = fields[1] as int;
+      ..quizId = fields[1] as int
+      ..submittedTime = fields[2] as DateTime;
   }
 
   @override
   void write(BinaryWriter writer, HiveQuizResult obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.validNumber)
       ..writeByte(1)
-      ..write(obj.quizId);
+      ..write(obj.quizId)
+      ..writeByte(2)
+      ..write(obj.submittedTime);
   }
 
   @override

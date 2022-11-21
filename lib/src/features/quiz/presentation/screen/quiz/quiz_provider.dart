@@ -6,9 +6,9 @@ import 'package:quiz_app/utils/lang/list_ext.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 import 'package:quiz_app/utils/logger.dart';
 
-import '../../domain/models/question.dart';
-import '../../domain/models/volume.dart';
-import '../../domain/repository/quiz_repository.dart';
+import '../../../domain/models/question.dart';
+import '../../../domain/models/volume.dart';
+import '../../../domain/repository/quiz_repository.dart';
 
 class QuizProvider extends ChangeNotifier with Logger {
   final QuizRepository _quizRepository;
@@ -17,10 +17,12 @@ class QuizProvider extends ChangeNotifier with Logger {
   List<Question> questions = [];
 
   int _currentQuestion = 0;
+
   set currentQuestion(value) {
     _currentQuestion = value;
     notifyListeners();
   }
+
   get currentQuestion => _currentQuestion;
 
   QuizProvider(this._quizRepository);

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/core/hook.dart';
 import 'package:quiz_app/src/features/quiz/domain/models/question_answer.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/quiz_provider.dart';
 import 'package:quiz_app/utils/framework/navigation_ext.dart';
 import 'package:quiz_app/utils/lang/list_ext.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 import 'package:quiz_app/utils/logger.dart';
 
-import '../../domain/models/question.dart';
-import '../../domain/models/volume.dart';
-import '../view/quiz_topbar.dart';
+import '../../../domain/models/question.dart';
+import '../../../domain/models/volume.dart';
+import '../../view/quiz_topbar.dart';
+import 'quiz_provider.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({Key? key}) : super(key: key);

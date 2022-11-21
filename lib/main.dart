@@ -1,15 +1,11 @@
-import 'dart:developer';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/routes.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/quiz_provider.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/quiz_screen.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/topic_provider.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/volume_provider.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/volume_screen.dart';
-import 'package:quiz_app/src/features/save_result/domain/repository/local_database_repository.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/quiz/quiz_screen.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/topic/topic_provider.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/volume/volume_provider.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/volume/volume_screen.dart';
 import 'package:quiz_app/src/features/summary_result/presentation/summary_provider.dart';
 import 'package:quiz_app/src/features/summary_result/presentation/summary_result_screen.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
@@ -19,7 +15,8 @@ import 'firebase_options.dart';
 import 'src/features/auth/domain/models/account.dart';
 import 'src/features/auth/presentation/auth_provider.dart';
 import 'src/features/auth/presentation/auth_screen.dart';
-import 'src/features/quiz/presentation/screen/topic_screen.dart';
+import 'src/features/quiz/presentation/screen/quiz/quiz_provider.dart';
+import 'src/features/quiz/presentation/screen/topic/topic_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +38,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => TopicProvider(locator())),
-        ChangeNotifierProvider(create: (context) => VolumeProvider(locator())),
+        ChangeNotifierProvider(
+            create: (context) => VolumeProvider(locator(), locator())),
         ChangeNotifierProvider(create: (context) => QuizProvider(locator())),
         ChangeNotifierProvider(create: (context) => SummaryProvider())
       ],

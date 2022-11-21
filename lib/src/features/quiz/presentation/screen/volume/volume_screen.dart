@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/src/constants/dimens.dart';
 import 'package:quiz_app/src/constants/tints.dart';
 import 'package:quiz_app/src/features/quiz/domain/models/volume.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/volume_provider.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/volume/volume_provider.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 
 class VolumeScreen extends StatefulWidget {
@@ -56,11 +56,11 @@ class _VolumeScreenState extends State<VolumeScreen> {
         width: double.infinity,
         height: 150.0,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.indigoAccent),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.indigoAccent,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-
           children: [
             const SizedBox(height: Dimens.PADDING_M),
             Text(
@@ -68,9 +68,10 @@ class _VolumeScreenState extends State<VolumeScreen> {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: Dimens.PADDING_M),
+            Text(volume.quizType.name),
+            const SizedBox(height: Dimens.PADDING_M),
             Text(
-              volume.quizType.name,
-            ),
+                'Highest score = ${_volumeProvider.quizMap[volume.id]?.validNumber ?? 0}')
           ],
         ),
       ),

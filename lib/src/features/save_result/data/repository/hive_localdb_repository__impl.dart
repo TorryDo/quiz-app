@@ -1,16 +1,19 @@
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:quiz_app/di/local_modules/hive_modules.dart';
 import 'package:quiz_app/src/features/save_result/data/mapper/quiz_result_mapper.dart';
 import 'package:quiz_app/src/features/save_result/data/model/hive_quiz_result.dart';
 import 'package:quiz_app/src/features/save_result/domain/model/quiz_result.dart';
 import 'package:quiz_app/src/features/save_result/domain/repository/local_database_repository.dart';
 import 'package:quiz_app/utils/lang/map_ext.dart';
 
+const DEFAULT_BOX_NAME = "default_box";
+
 class HiveLocalDbRepositoryImpl extends LocalDatabaseRepository {
   final String boxName;
 
   HiveLocalDbRepositoryImpl({
-    this.boxName = "default",
+    this.boxName = DEFAULT_BOX_NAME,
   });
 
   @override
@@ -73,5 +76,27 @@ class HiveLocalDbRepositoryImpl extends LocalDatabaseRepository {
       List<HiveQuizResult> hiveQuizResults =  List.from(box.values);
       return hiveQuizResults.map((e) => e.toQuizResult()).toList();
     });
+  }
+
+  @override
+  Future<bool> isExisted(QuizResult quizResult) async {
+    final box = await Hive.openBox(boxName);
+    
+    return box.containsKey(quizResult.id);
+    
+  }
+
+  @override
+  Future<bool> clear() async{
+    try {
+      final box = await Hive.openBox(boxName);
+
+      await box.clear();
+      return true;
+    }on Exception catch(e){
+
+      return false;
+    }
+
   }
 }

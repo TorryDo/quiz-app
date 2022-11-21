@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/src/constants/dimens.dart';
 import 'package:quiz_app/src/constants/tints.dart';
 import 'package:quiz_app/src/features/quiz/domain/models/volume.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/quiz_provider.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 import 'package:quiz_app/utils/logger.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
+
+import '../screen/quiz/quiz_provider.dart';
 
 class QuizTopBar extends StatefulWidget {
 
