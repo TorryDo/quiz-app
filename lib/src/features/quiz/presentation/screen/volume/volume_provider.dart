@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:quiz_app/core/side_effect/side_effect_notifier.dart';
 import 'package:quiz_app/di/locator.dart';
 import 'package:quiz_app/routes.dart';
 import 'package:quiz_app/src/features/quiz/domain/models/topic.dart';
 import 'package:quiz_app/src/features/quiz/domain/repository/quiz_repository.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/volume/volume_side_effect.dart';
 import 'package:quiz_app/src/features/save_result/domain/model/quiz_result.dart';
 import 'package:quiz_app/src/features/save_result/domain/repository/local_database_repository.dart';
 import 'package:quiz_app/utils/framework/navigation_ext.dart';
@@ -18,7 +20,7 @@ VolumeProvider initVolumeProvider() {
   return VolumeProvider(locator(), locator());
 }
 
-class VolumeProvider extends ChangeNotifier {
+class VolumeProvider extends ChangeNotifier with SideEffectNotifier<VolumeSideEffect> {
   final QuizRepository _quizRepository;
 
   final LocalDatabaseRepository _localDbRepo;
@@ -57,6 +59,10 @@ class VolumeProvider extends ChangeNotifier {
   void navigateToQuizScreen(BuildContext context, Volume volume) {
     QuizProvider quizProvider = context.provider(listen: false);
     quizProvider.prepare(volume);
-    context.pushNamed(Routes.QUIZ_SCREEN);
+    postSideEffect(NavigateToQuizScreen());
+  }
+  void popToTopicScreen(){
+    log("<> pop to topic screen");
+    postSideEffect(NavigateToTopicScreen());
   }
 }

@@ -1,12 +1,17 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quiz_app/common_widgets/background/dynamic_wave.dart';
 import 'package:quiz_app/src/constants/dimens.dart';
 import 'package:quiz_app/src/constants/tints.dart';
-import 'package:quiz_app/src/features/quiz/presentation/screen/topic/topic_screen_side_effect.dart';
 import 'package:quiz_app/src/features/quiz/presentation/screen/topic/topic_provider.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/topic/topic_screen_side_effect.dart';
 import 'package:quiz_app/utils/framework/navigation_ext.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
 import 'package:quiz_app/utils/logger.dart';
 
+import '../../../../../../common_widgets/decoration/blur_view.dart';
 import '../../../../../../routes.dart';
 import '../../../domain/models/topic.dart';
 
@@ -22,7 +27,7 @@ class _TopicScreenState extends State<TopicScreen> with Logger {
 
   // support function ----------------------------------------------------------
 
-  void _navigateToVolumeScreen(){
+  void _navigateToVolumeScreen() {
     context.pushNamed(Routes.VOLUME_SCREEN);
   }
 
@@ -32,53 +37,108 @@ class _TopicScreenState extends State<TopicScreen> with Logger {
   Widget build(BuildContext context) {
     _topicProvider = context.provider();
 
-    _topicProvider.collectSideEffect((effect){
-      if(effect is NavigateToVolumeScreen){
+    _topicProvider.collectSideEffect((effect) {
+      if (effect is NavigateToVolumeScreen) {
         return _navigateToVolumeScreen();
       }
     });
 
     return Container(
-      color: Colors.blueAccent,
-      child: SafeArea(
-        child: Column(
-          children: [
-            _topBar(),
-            Expanded(
-              child: Container(
-                color: Colors.white70,
+      color: Colors.black38,
+      child: Stack(children: [
+        const Align(
+          alignment: Alignment.topCenter,
+          child: DynamicWave(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Tints.MAIN_COLOR_VARIANT, Tints.MAIN_COLOR]),
+            width: double.infinity,
+            height: 300,
+          ),
+        ),
+        SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              _topBar(),
+              const SizedBox(height: 10),
+              Expanded(
                 child: _topics(),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        )
+      ]),
     );
   }
 
   Widget _topBar() {
-    return AppBar(
-      title: const Text("Choose Topic"),
+    return SizedBox(
+      width: double.infinity,
+      height: 55,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: BlurView(
+                width: 40,
+                height: 40,
+                borderRadius: BorderRadius.circular(10),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10)
+                      .copyWith(right: 2),
+                  child: SvgPicture.asset(
+                    'assets/icons/left_arrow.svg',
+                    semanticsLabel: 'left arrow icon',
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Choose topic",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ))
+        ],
+      ),
     );
   }
 
   Widget _topics() {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.2,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15)
+          .copyWith(top: 10, bottom: 20),
+      child: BlurView(
+        // opacity: 0.6,
+        borderRadius: BorderRadius.circular(15),
+        width: double.infinity,
+        height: double.infinity,
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1.2,
+          ),
+          itemCount: _topicProvider.topics.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: _item(_topicProvider.topics[index]),
+            );
+          },
+        ),
       ),
-      itemCount: _topicProvider.topics.length,
-      itemBuilder: (BuildContext context, int index) {
-        return _item(_topicProvider.topics[index]);
-      },
     );
   }
 
   Widget _item(Topic item) {
     return GestureDetector(
       child: Card(
-        color: Tints.MAIN_COLOR.withOpacity(0.3),
+        color: Colors.blueGrey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Dimens.ROUNDED_L),
         ),
@@ -97,12 +157,15 @@ class _TopicScreenState extends State<TopicScreen> with Logger {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(item.title, style: const TextStyle(color: Tints.THEME_COLOR),),
+                Text(
+                  item.title,
+                  style: const TextStyle(color: Tints.THEME_COLOR),
+                ),
                 const SizedBox(height: Dimens.PADDING_S),
-                Text(item.description, style: const TextStyle(color: Tints.THEME_COLOR))
+                Text(item.description,
+                    style: const TextStyle(color: Tints.THEME_COLOR))
               ],
             )
-
           ],
         ),
       ),

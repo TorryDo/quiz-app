@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class Tints{
 
-  static const MAIN_COLOR = Colors.lightBlue;
+  static const MAIN_COLOR = Color(0xff668cf2);
+  static const MAIN_COLOR_VARIANT = Color(0xff7a5df3);
   static const THEME_COLOR = GRAY;
 
   // colors ---------------------------------------------------------------------
