@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/core/widgets/base_screen.dart';
 import 'package:quiz_app/src/constants/dimens.dart';
 import 'package:quiz_app/src/features/summary_result/presentation/summary_provider.dart';
 import 'package:quiz_app/src/features/summary_result/presentation/summary_result_side_effect.dart';
@@ -31,8 +33,8 @@ class SummaryResultScreen extends StatelessWidget {
       }
     });
 
-    return Material(
-      color: Colors.blueGrey,
+    return BaseScreen(
+      backgroundAsset: 'assets/images/bk5.png',
       child: SafeArea(
         child: Column(
           children: [
@@ -71,12 +73,12 @@ class SummaryResultScreen extends StatelessWidget {
   Widget _middle(SummaryProvider summaryProvider) {
     final pair = summaryProvider.calcResult();
 
-    Widget dynamic() {
+    Widget summaryType() {
       switch (pair.key) {
         case SummaryType.SOLVED_ALL:
           return _solve_all();
         default:
-          return _notMaxScore(pair.value);
+          return _notMaxScore(pair.value, summaryProvider.questions.length);
         // case SummaryType.SOLVED_80_100:
         //   break;
         // case SummaryType.SOLVED_65_80:
@@ -94,29 +96,54 @@ class SummaryResultScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          dynamic(),
-          Column(
-            children: [
-              const Text('Your scores:'),
-              const SizedBox(height: 10),
-              Text('${pair.value}/${summaryProvider.questions.length}'),
-            ],
-          )
+          summaryType(),
         ]);
   }
 
   Widget _solve_all() {
     return Column(
-      children: const [
-        Text('You won this game'),
+      children: [
+        AnimatedTextKit(
+          animatedTexts: [
+            TypewriterAnimatedText(
+              'You won this quiz!',
+              textStyle: const TextStyle(
+                fontSize: 32.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white
+              ),
+              speed: const Duration(milliseconds: 120),
+            ),
+          ],
+          totalRepeatCount: 3,
+          pause: const Duration(seconds: 2),
+          displayFullTextOnTap: true,
+          stopPauseOnTap: true,
+        )
       ],
     );
   }
 
-  Widget _notMaxScore(int score) {
+  Widget _notMaxScore(int score, int totalQuestion) {
     return Column(
       children: [
-        Text('Your score is: ${score}'),
+        AnimatedTextKit(
+          animatedTexts: [
+            TypewriterAnimatedText(
+              'Your score is: $score/$totalQuestion',
+              textStyle: const TextStyle(
+                fontSize: 32.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white
+              ),
+              speed: const Duration(milliseconds: 120),
+            ),
+          ],
+          totalRepeatCount: 3,
+          pause: const Duration(seconds: 2),
+          displayFullTextOnTap: true,
+          stopPauseOnTap: true,
+        )
       ],
     );
   }

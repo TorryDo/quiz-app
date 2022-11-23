@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/common_widgets/time/countdown_view.dart';
 import 'package:quiz_app/core/hook.dart';
+import 'package:quiz_app/core/widgets/base_screen.dart';
+import 'package:quiz_app/routes.dart';
 import 'package:quiz_app/src/features/quiz/domain/models/question_answer.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/quiz/quiz_screen_side_effect.dart';
 import 'package:quiz_app/utils/framework/navigation_ext.dart';
 import 'package:quiz_app/utils/lang/list_ext.dart';
 import 'package:quiz_app/utils/lib/provider/provider_ext.dart';
@@ -59,20 +63,87 @@ class _QuizScreenState extends State<QuizScreen> with Logger, Hook {
       _quizProvider = context.provider();
     });
 
+    _quizProvider.collectSideEffect((effect){
+      if(effect is NavigateToSummaryResultScreen){
+        return context.popAndPushNamed(Routes.SUMMARY_SCREEN);
+      }
+    });
+
     return WillPopScope(
       onWillPop: _onWillPop,
-      child: Material(
-        color: Colors.blueGrey,
+      child: BaseScreen(
+        backgroundAsset: 'assets/images/bk3.png',
         child: SafeArea(child: _body()),
+      ),
+    );
+  }
+
+  void _onPop() {
+    if (_quizProvider.currentQuestion <= 0) {
+      return context.pop();
+    }
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Are you sure?'),
+        content: const Text(
+          "Do you want to exit the quiz?, looks like you're not finished yet",
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => dialogContext.pop(),
+            child: const Text('Continue'),
+          ),
+          TextButton(
+            onPressed: () {
+              dialogContext.pop(true);
+              context.pop();
+            },
+            child: const Text('Quit'),
+          ),
+        ],
       ),
     );
   }
 
   Widget _body() {
     return Column(children: [
-      QuizTopBar(width: 150, quizType: _quizProvider.volume.quizType),
+      const SizedBox(height: 10),
+      _topBar(),
+      const SizedBox(height: 15),
       Flexible(flex: 1, child: _questionHorizontalView()),
     ]);
+  }
+
+  get quizType => _quizProvider.volume.quizType;
+
+  Widget _topBar() {
+    if (quizType == QuizType.MULTI_QUESTION_LIMIT_TIME ||
+        quizType == QuizType.SINGLE_QUESTION_LIMIT_TIME) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          QuizTopBar(
+            width: 150,
+            quizType: _quizProvider.volume.quizType,
+            onPop: () => _onPop(),
+          ),
+          CountDownView(
+            countdown:
+                Duration(milliseconds: _quizProvider.volume.countdownInMillis),
+            onFinished: () {
+              _quizProvider.forceStop(context);
+            },
+          ),
+          const SizedBox(height: 10)
+        ],
+      );
+    }
+
+    return QuizTopBar(
+        width: 150,
+        quizType: _quizProvider.volume.quizType,
+        onPop: () => _onPop());
   }
 
   Widget _questionHorizontalView() {
@@ -102,7 +173,6 @@ class _QuizScreenState extends State<QuizScreen> with Logger, Hook {
   Widget _item(Question question, int position) {
     question.questionAnswer.collectSideEffect((event) {
       if (event is AnswerValid) {
-        // d('pos = $position - leng = ${_quizProvider.questions.length}');
         if (position >= _quizProvider.questions.length - 1) {
           _quizProvider.navigateToSummaryScreen(context);
           return;

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quiz_app/common_widgets/background/dynamic_wave.dart';
+import 'package:quiz_app/core/widgets/base_screen.dart';
 import 'package:quiz_app/src/constants/dimens.dart';
 import 'package:quiz_app/src/constants/tints.dart';
 import 'package:quiz_app/src/features/quiz/presentation/screen/topic/topic_provider.dart';
@@ -43,8 +44,8 @@ class _TopicScreenState extends State<TopicScreen> with Logger {
       }
     });
 
-    return Container(
-      color: Colors.black38,
+    return BaseScreen(
+      color: Colors.blueGrey,
       child: Stack(children: [
         const Align(
           alignment: Alignment.topCenter,
@@ -154,17 +155,20 @@ class _TopicScreenState extends State<TopicScreen> with Logger {
                 color: Tints.GRAY,
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  item.title,
-                  style: const TextStyle(color: Tints.THEME_COLOR),
-                ),
-                const SizedBox(height: Dimens.PADDING_S),
-                Text(item.description,
-                    style: const TextStyle(color: Tints.THEME_COLOR))
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    item.title,
+                    style: const TextStyle(color: Tints.THEME_COLOR, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: Dimens.PADDING_S),
+                  Text(item.description,
+                      style: const TextStyle(color: Tints.THEME_COLOR))
+                ],
+              ),
             )
           ],
         ),

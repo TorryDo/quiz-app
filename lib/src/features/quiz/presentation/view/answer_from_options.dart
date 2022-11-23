@@ -115,7 +115,7 @@ class AnswerOption extends StatefulWidget {
     required this.description,
     this.width,
     this.height,
-    this.backgroundColor = Colors.white70,
+    this.backgroundColor = Colors.white,
     this.chooseColor = Colors.yellowAccent,
     this.validColor = Colors.green,
     this.invalidColor = Colors.redAccent,
@@ -141,7 +141,7 @@ class _AnswerOptionState extends State<AnswerOption> {
                 return widget.backgroundColor;
               }
             }(),
-            borderRadius: BorderRadius.circular(Dimens.ROUNDED_XS)),
+            borderRadius: BorderRadius.circular(Dimens.ROUNDED_S)),
         padding: const EdgeInsets.all(10),
         child: Align(
             alignment: Alignment.centerLeft,

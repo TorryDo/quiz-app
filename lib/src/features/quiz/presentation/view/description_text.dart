@@ -18,7 +18,7 @@ class _DescriptionTextState extends State<DescriptionText> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.description),
+          Text(widget.description, style: const TextStyle(fontSize: 16, color: Colors.white)),
         ],
       ),
     );

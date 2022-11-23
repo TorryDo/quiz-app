@@ -7,7 +7,7 @@ mixin SideEffectNotifier<T> {
     }
   }
 
-  void collectSideEffect(Function(T) doEffect) {
+  void collectSideEffect(Function(T effect) doEffect) {
     handleSideEffect = doEffect;
   }
 }

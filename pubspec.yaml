@@ -47,6 +47,7 @@ dependencies:
   flutter_native_splash: ^2.2.14
   auto_size_text: ^3.0.0
   animated_text_kit: ^4.2.2
+  lottie: ^2.0.0
 
   #-database
   hive: ^2.2.3

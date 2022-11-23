@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
+import 'package:quiz_app/core/side_effect/side_effect_notifier.dart';
 import 'package:quiz_app/routes.dart';
+import 'package:quiz_app/src/features/quiz/presentation/screen/quiz/quiz_screen_side_effect.dart';
 import 'package:quiz_app/src/features/summary_result/presentation/summary_provider.dart';
 import 'package:quiz_app/utils/framework/navigation_ext.dart';
 import 'package:quiz_app/utils/lang/list_ext.dart';
@@ -10,7 +12,7 @@ import '../../../domain/models/question.dart';
 import '../../../domain/models/volume.dart';
 import '../../../domain/repository/quiz_repository.dart';
 
-class QuizProvider extends ChangeNotifier with Logger {
+class QuizProvider extends ChangeNotifier with Logger, SideEffectNotifier<QuizScreenSideEffect> {
   final QuizRepository _quizRepository;
 
   late Volume volume;
@@ -34,9 +36,13 @@ class QuizProvider extends ChangeNotifier with Logger {
     notifyListeners();
   }
 
+  void forceStop(BuildContext context){
+    navigateToSummaryScreen(context);
+  }
+
   void navigateToSummaryScreen(BuildContext context) {
     SummaryProvider summaryProvider = context.provider(listen: false);
     summaryProvider.prepare(questions);
-    context.popAndPushNamed(Routes.SUMMARY_SCREEN);
+    postSideEffect(NavigateToSummaryResultScreen());
   }
 }

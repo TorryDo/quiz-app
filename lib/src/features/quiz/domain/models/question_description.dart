@@ -14,20 +14,26 @@ class DescriptionOnly extends QuestionDescription {
   Widget render() {
     return DescriptionText(description: description);
   }
-
 }
 
 class DescriptionWithImage extends QuestionDescription {
   String description = '';
 
-  Widget image;
+  String imageSrc;
 
-  DescriptionWithImage(this.description, {required this.image});
+  DescriptionWithImage(this.description, {required this.imageSrc});
 
   @override
   Widget render() {
     return Column(
-      children: [Text(description), image],
+      children: [
+        DescriptionText(description: description),
+        const SizedBox(height: 10),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: Image.asset(imageSrc),
+        )
+      ],
     );
   }
 }

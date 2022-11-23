@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quiz_app/common_widgets/background/dynamic_wave.dart';
 import 'package:quiz_app/common_widgets/decoration/blur_view.dart';
+import 'package:quiz_app/core/widgets/base_screen.dart';
 import 'package:quiz_app/routes.dart';
 import 'package:quiz_app/src/constants/dimens.dart';
 import 'package:quiz_app/src/constants/tints.dart';
@@ -45,35 +46,33 @@ class _VolumeScreenState extends State<VolumeScreen> {
       }
     });
 
-    return Material(
-      child: Container(
-        color: Colors.black38,
-        child: Stack(children: [
-          const Align(
-            alignment: Alignment.topCenter,
-            child: DynamicWave(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Tints.MAIN_COLOR_VARIANT, Tints.MAIN_COLOR]),
-              width: double.infinity,
-              height: 300,
-            ),
+    return BaseScreen(
+      color: Colors.blueGrey,
+      child: Stack(children: [
+        const Align(
+          alignment: Alignment.topCenter,
+          child: DynamicWave(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Tints.MAIN_COLOR_VARIANT, Tints.MAIN_COLOR]),
+            width: double.infinity,
+            height: 300,
           ),
-          SafeArea(
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                _topBar(),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: _body(),
-                ),
-              ],
-            ),
-          )
-        ]),
-      ),
+        ),
+        SafeArea(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              _topBar(),
+              const SizedBox(height: 10),
+              Expanded(
+                child: _body(),
+              ),
+            ],
+          ),
+        )
+      ]),
     );
   }
 

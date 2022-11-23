@@ -5,12 +5,15 @@ class Volume {
 
   // may not placed here
   QuizType quizType;
+  int countdownInMillis;
 
-  Volume(
-      {required this.id,
-      required this.topicId,
-      required this.title,
-      this.quizType = QuizType.SINGLE_QUESTION_NO_LIMIT_TIME});
+  Volume({
+    required this.id,
+    required this.topicId,
+    required this.title,
+    this.quizType = QuizType.SINGLE_QUESTION_NO_LIMIT_TIME,
+    this.countdownInMillis = 0,
+  });
 
   Volume copyWith({int? id, int? topicId, String? title}) {
     return Volume(
