@@ -16,7 +16,7 @@ A simple quiz app, showing off my abilities, intended to embed to my native app.
 -	different type of quizzes, (limit time, unlimit time, text only, text with image... )
 
 
-## Demo 😊
+## Demo 🎉
 
 
 https://user-images.githubusercontent.com/85553681/203713486-ad429799-4328-49df-9f97-71da6faa34bd.mp4
@@ -31,6 +31,6 @@ https://user-images.githubusercontent.com/85553681/203713486-ad429799-4328-49df-
 
 <br/>
 
-# Time consumed 😐
+# Time consumed 🚀
 - Nov 6, 2022 - Nov 24, 2022
 
