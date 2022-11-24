@@ -32,5 +32,5 @@ https://user-images.githubusercontent.com/85553681/203713486-ad429799-4328-49df-
 <br/>
 
 # Time consumed 😐
-- Nov 6, 2022 - current
+- Nov 6, 2022 - Nov 24, 2022
 
