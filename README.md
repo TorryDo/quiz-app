@@ -2,7 +2,7 @@
 
 A new Flutter project.
 
-## About
+## About 🍕
 ### 1, Tech Stack
 -	MVVM pattern with clean architecture approach
 -   Firebase auth
@@ -16,11 +16,13 @@ A new Flutter project.
 -	different type of quizzes, (limit time, unlimit time, text only, text with image... )
 
 
-## Demo 
+## Demo 😊
 
 
+https://user-images.githubusercontent.com/85553681/203713486-ad429799-4328-49df-9f97-71da6faa34bd.mp4
 
-## Screenshots
+
+## Screenshots 🎁
 
 |🍔|🍕|😍|              
 |:-:|:-:|:-:|
@@ -29,6 +31,6 @@ A new Flutter project.
 
 <br/>
 
-# Time consumed
+# Time consumed 😐
 - Nov 6, 2022 - current
 
