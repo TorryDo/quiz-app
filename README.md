@@ -1,6 +1,6 @@
 # quiz_app
 
-A new Flutter project.
+A simple quiz app, showing off my abilities, intended to embed to my native app. https://github.com/TorryDo/English-Dictionary
 
 ## About 🍕
 ### 1, Tech Stack
