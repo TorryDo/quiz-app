@@ -19,10 +19,15 @@ class BaseScreen extends StatefulWidget {
   final Widget child;
   final Color? color;
   final String? backgroundAsset;
+  final Widget? background;
 
-  const BaseScreen(
-      {Key? key, required this.child, this.color, this.backgroundAsset})
-      : super(key: key);
+  const BaseScreen({
+    Key? key,
+    required this.child,
+    this.color,
+    this.backgroundAsset,
+    this.background,
+  }) : super(key: key);
 
   @override
   State<BaseScreen> createState() => _BaseScreenState();
@@ -31,10 +36,10 @@ class BaseScreen extends StatefulWidget {
 class _BaseScreenState extends State<BaseScreen> {
   @override
   void initState() {
-    if (widget.color != null && widget.backgroundAsset != null) {
-      throw Exception(
-          "passing only color or backgroundAssets, one of them must be null");
-    }
+    // if (widget.color != null && widget.backgroundAsset != null ) {
+    //   throw Exception(
+    //       "passing only color or backgroundAssets, one of them must be null");
+    // }
     super.initState();
   }
 
@@ -52,6 +57,16 @@ class _BaseScreenState extends State<BaseScreen> {
                 widget.backgroundAsset!,
                 fit: BoxFit.cover,
               ),
+            );
+          }
+          return const SizedBox();
+        }(),
+            () {
+          if (widget.background != null) {
+            return SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: widget.background,
             );
           }
           return const SizedBox();

@@ -2,15 +2,33 @@
 
 A new Flutter project.
 
-## Getting Started
+## About
+### 1, Tech Stack
+-	MVVM pattern with clean architecture approach
+-   Firebase auth
+-	Dependency injection: GetIt
+-	State management: Provider
+-	Local Db: Hive
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+### 2, Features
+-	Easily integration with native platform
+-	different type of quizzes, (limit time, unlimit time, text only, text with image... )
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Demo 
+
+
+
+## Screenshots
+
+|🍔|🍕|😍|              
+|:-:|:-:|:-:|
+|  ![](scrshot/demo1.jpg)  |  ![](scrshot/demo2.jpg)  |  ![](scrshot/demo3.jpg)  |
+|  ![](scrshot/demo4.jpg)  |  ![](scrshot/demo5.jpg)  |  ![](scrshot/demo6.jpg)  |
+
+<br/>
+
+# Time consumed
+- Nov 6, 2022 - current
+

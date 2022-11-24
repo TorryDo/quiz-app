@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_app/common_widgets/button/google_button.dart';
+import 'package:quiz_app/src/constants/tints.dart';
 import '../../quiz/presentation/screen/topic/topic_screen.dart';
 import 'auth_provider.dart';
 
@@ -27,7 +29,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: Colors.redAccent,
+      color: Tints.DARK_GRAY,
       child: _body(),
     );
   }
@@ -37,9 +39,9 @@ class _AuthScreenState extends State<AuthScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ElevatedButton(
-            onPressed: _authViewModel.signInWithGoogle,
-            child: const Text("signIn With Google")),
+        GoogleButton(
+          onPressed: _authViewModel.signInWithGoogle,
+        ),
         ElevatedButton(
             onPressed: _authViewModel.signInAsGuest,
             child: const Text("signIn as Guest"))

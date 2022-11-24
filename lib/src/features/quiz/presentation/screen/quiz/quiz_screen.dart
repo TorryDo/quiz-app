@@ -63,8 +63,8 @@ class _QuizScreenState extends State<QuizScreen> with Logger, Hook {
       _quizProvider = context.provider();
     });
 
-    _quizProvider.collectSideEffect((effect){
-      if(effect is NavigateToSummaryResultScreen){
+    _quizProvider.collectSideEffect((effect) {
+      if (effect is NavigateToSummaryResultScreen) {
         return context.popAndPushNamed(Routes.SUMMARY_SCREEN);
       }
     });

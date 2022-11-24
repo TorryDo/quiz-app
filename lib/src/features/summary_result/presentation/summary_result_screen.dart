@@ -34,7 +34,11 @@ class SummaryResultScreen extends StatelessWidget {
     });
 
     return BaseScreen(
-      backgroundAsset: 'assets/images/bk5.png',
+      // backgroundAsset: 'assets/images/bk5.png',
+      background: Image.asset(
+        'assets/images/bk5.png',
+        fit: BoxFit.cover,
+      ),
       child: SafeArea(
         child: Column(
           children: [

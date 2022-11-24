@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quiz_app/common_widgets/background/dynamic_wave.dart';
 import 'package:quiz_app/common_widgets/decoration/blur_view.dart';
 import 'package:quiz_app/core/widgets/base_screen.dart';
@@ -47,7 +48,8 @@ class _VolumeScreenState extends State<VolumeScreen> {
     });
 
     return BaseScreen(
-      color: Colors.blueGrey,
+      color: Tints.DARK_GRAY,
+      // background: Lottie.asset('assets/raws/white_clouds.json'),
       child: Stack(children: [
         const Align(
           alignment: Alignment.topCenter,

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quiz_app/common_widgets/background/dynamic_wave.dart';
 import 'package:quiz_app/core/widgets/base_screen.dart';
 import 'package:quiz_app/src/constants/dimens.dart';
@@ -45,7 +46,8 @@ class _TopicScreenState extends State<TopicScreen> with Logger {
     });
 
     return BaseScreen(
-      color: Colors.blueGrey,
+      color: Tints.DARK_GRAY,
+      // background: Lottie.asset('assets/raws/white_clouds.json'),
       child: Stack(children: [
         const Align(
           alignment: Alignment.topCenter,
@@ -139,7 +141,7 @@ class _TopicScreenState extends State<TopicScreen> with Logger {
   Widget _item(Topic item) {
     return GestureDetector(
       child: Card(
-        color: Colors.blueGrey,
+        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Dimens.ROUNDED_L),
         ),
@@ -162,11 +164,11 @@ class _TopicScreenState extends State<TopicScreen> with Logger {
                 children: [
                   Text(
                     item.title,
-                    style: const TextStyle(color: Tints.THEME_COLOR, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: Dimens.PADDING_S),
                   Text(item.description,
-                      style: const TextStyle(color: Tints.THEME_COLOR))
+                      style: const TextStyle())
                 ],
               ),
             )

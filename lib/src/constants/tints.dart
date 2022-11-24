@@ -9,8 +9,10 @@ class Tints{
   static const THEME_COLOR = GRAY;
 
   // colors ---------------------------------------------------------------------
-  static const GRAY_LIGHT = Colors.white70;
+  static const GRAY_LIGHT = Color(0xffdddddd);
   static const GRAY = Color(0xffD8E3E7);
+  
+  static const DARK_GRAY = Color(0xff50577A);
 
 
 }
