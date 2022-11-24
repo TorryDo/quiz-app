@@ -34,3 +34,7 @@ https://user-images.githubusercontent.com/85553681/203713486-ad429799-4328-49df-
 # Time consumed 🚀
 - Nov 6, 2022 - Nov 24, 2022
 
+# Disclamer
+- The assets in this project is for demo purpose only, I don't have any intention in using it for commercial purpose.
+- If you have any problem, please contact me, the asset will be removed immediately!
+
